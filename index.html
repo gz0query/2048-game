@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f8ee">
+    <title>2048 | Number Garden</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <main class="game-shell">
+        <header class="topbar">
+            <a class="wordmark" href="#game" aria-label="2048 game home">
+                <span class="wordmark-mark" aria-hidden="true">2</span>
+                <span>NUMBER<span class="wordmark-light">GARDEN</span></span>
+            </a>
+            <p class="edition">THE DAILY BRAIN BREAK <span aria-hidden="true">/</span> NO. 2048</p>
+        </header>
+
+        <section class="game-layout" id="game" aria-labelledby="game-title">
+            <div class="intro">
+                <p class="eyebrow"><span class="eyebrow-dot"></span> A LITTLE ROOM TO THINK</p>
+                <h1 id="game-title">Make room<br>for <span>2048.</span></h1>
+                <p class="intro-copy">Slide, combine, and keep going. Every good run starts with a little bit of space.
+                </p>
+                <p class="player-greeting" id="player-greeting" aria-live="polite"></p>
+
+                <div class="score-row" aria-label="Game scores">
+                    <div class="score-box" aria-live="polite">
+                        <span class="score-label">SCORE</span>
+                        <strong id="score">0</strong>
+                        <span class="score-gain" id="score-gain" aria-hidden="true"></span>
+                    </div>
+                    <div class="score-box score-box-best">
+                        <span class="score-label">BEST</span>
+                        <strong id="best-score">0</strong>
+                    </div>
+                </div>
+
+                <div class="game-actions">
+                    <button class="restart-button" id="restart" type="button">
+                        <span class="restart-icon" aria-hidden="true">↻</span>
+                        New game
+                    </button>
+                    <button class="results-button" id="view-results" type="button">View results</button>
+                </div>
+            </div>
+
+            <div class="board-column">
+                <div class="board-topline">
+                    <span class="board-label"><span class="live-dot"></span> YOUR BOARD</span>
+                    <div class="board-status">
+                        <span class="level-count" id="level-count">LEVEL 1 · TARGET 500</span>
+                        <span class="timer-display"><span class="timer-label">TIMER</span><span class="timer-count"
+                                id="timer-count" aria-live="polite">01:00</span></span>
+                        <span class="move-count" id="move-count">MOVE 01</span>
+                    </div>
+                </div>
+                <div class="board" id="board" role="grid" aria-label="2048 game board">
+                    <div class="cell-layer" id="cell-layer" aria-hidden="true"></div>
+                    <div class="tile-layer" id="tile-layer"></div>
+                    <div class="game-overlay" id="game-overlay" hidden>
+                        <div class="overlay-content">
+                            <span class="overlay-kicker" id="overlay-kicker">NICE WORK</span>
+                            <h2 id="overlay-title">You made it.</h2>
+                            <p id="overlay-message">The garden keeps growing.</p>
+                            <div class="overlay-actions">
+                                <button class="overlay-button overlay-primary" id="continue-button" type="button">Keep
+                                    playing</button>
+                                <button class="overlay-button overlay-secondary" id="overlay-restart" type="button">New
+                                    game</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="board-caption"><span class="caption-spark" aria-hidden="true">✳</span> Reach the target before
+                    time runs out to grow your garden.</p>
+            </div>
+        </section>
+
+        <section class="controls" aria-label="Keyboard controls">
+            <div class="controls-heading">
+                <span class="controls-icon" aria-hidden="true">⌘</span>
+                <div>
+                    <h2>Find your rhythm</h2>
+                    <p>Use your keyboard to move the tiles</p>
+                </div>
+            </div>
+            <div class="key-instructions">
+                <span>CONTROLS</span>
+                <div class="key-group"><kbd>W</kbd><span>UP</span></div>
+                <div class="key-group"><kbd>A</kbd><span>LEFT</span></div>
+                <div class="key-group"><kbd>S</kbd><span>DOWN</span></div>
+                <div class="key-group"><kbd>D</kbd><span>RIGHT</span></div>
+            </div>
+        </section>
+
+        <footer class="page-footer">
+            <span>ONE MOVE AT A TIME</span>
+            <span class="footer-divider" aria-hidden="true">✳</span>
+            <span>BUILT FOR THE IN-BETWEEN</span>
+        </footer>
+    </main>
+
+    <div class="modal-backdrop" id="onboarding-modal" role="dialog" aria-modal="true"
+        aria-labelledby="onboarding-title" hidden>
+        <form class="modal-card onboarding-card" id="onboarding-form">
+            <span class="modal-kicker">A FRESH LITTLE START</span>
+            <h2 id="onboarding-title">Welcome to Number Garden.</h2>
+            <p>Enter your name to start.</p>
+            <label class="name-label" for="player-name">Your name</label>
+            <input id="player-name" name="playerName" type="text" maxlength="32" autocomplete="given-name"
+                placeholder="What should we call you?" required>
+            <button class="modal-submit" type="submit">Let’s play</button>
+        </form>
+    </div>
+
+    <div class="modal-backdrop" id="results-modal" role="dialog" aria-modal="true"
+        aria-labelledby="results-title" hidden>
+        <section class="modal-card results-card">
+            <button class="modal-close" id="close-results" type="button" aria-label="Close results">×</button>
+            <span class="modal-kicker">YOUR GARDEN SO FAR</span>
+            <h2 id="results-title">Game results</h2>
+            <div class="result-stats">
+                <div class="result-stat">
+                    <span>Highest score</span>
+                    <strong id="history-high">—</strong>
+                </div>
+                <div class="result-stat">
+                    <span>Lowest score</span>
+                    <strong id="history-low">—</strong>
+                </div>
+            </div>
+            <h3>Recent games</h3>
+            <ol class="history-list" id="history-list" aria-live="polite"></ol>
+            <p class="empty-history" id="empty-history">Your finished games will appear here.</p>
+            <button class="modal-submit results-close-button" id="results-close-button" type="button">Close</button>
+        </section>
+    </div>
+</body>
+
+</html>
